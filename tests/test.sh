@@ -11,12 +11,16 @@ for file in $FILES; do
 
     echo "testing $file"
 
-    perl perl-base64.pl $file > $perlf
-    node node-base64.js $file > $nodef
+    perl perl-base64-encode.pl $file > $perlf
+    node node-base64-encode.js $file > $nodef
 
     cmp $perlf $nodef
 
-    rm -rf $perlf $nodef
+    node node-base64-decode.js $nodef > $nodef-dec
+
+    cmp $file $nodef-dec
+
+    rm -rf $perlf $nodef $nodef-dec
 done
 
 echo "all tests passed. good to go."
