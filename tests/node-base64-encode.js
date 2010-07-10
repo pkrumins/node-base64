@@ -4,7 +4,7 @@ var fs = require('fs');
 var Buffer = require('buffer').Buffer;
 
 if (!process.argv[2]) {
-    sys.log('No argument specified, use `node-base64.js <file>`');
+    sys.log('No argument specified, use `node-base64-encode.js <file>`');
     process.exit(1);
 }
 
