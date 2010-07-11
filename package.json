@@ -1,6 +1,6 @@
 {
    "name": "base64",
-   "version": "v1.0.0",
+   "version": "1.0.0",
    "main": "base64",
    "description": "A C++ module for node-js that does base64 encoding and decoding.",
    "keywords": [
