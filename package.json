@@ -28,6 +28,7 @@
            "type": "git",
            "url": "http://github.com/pkrumins/node-base64.git" 
        } 
+   ],
    "directories": {
        "tests": "tests"
    },
