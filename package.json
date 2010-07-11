@@ -1,14 +1,13 @@
 {
-   "name": "node-base64",
+   "name": "base64",
    "version": "1.0",
    "description": "A C++ module for node-js that does base64 encoding and decoding.",
    "keywords": [
        "base conversion",
        "base64",
-       "base64 encode",
-       "base64 decode",
-       "base64_encode",
-       "base64_decode"
+       "base64 encode", "base64 decode",
+       "base64_encode", "base64_decode",
+       "encode", "decode"
    ],
    "maintainers": [
        {
@@ -34,6 +33,10 @@
    },
    "engines": {
        "node": ">=0.1.93"
+   },
+   "scripts": {
+       "preinstall": "node-waf configure",
+       "install": "node-waf build"
    }
 }
 
