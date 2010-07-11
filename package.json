@@ -36,8 +36,7 @@
        "node": ">=0.1.93"
    },
    "scripts": {
-       "preinstall": "node-waf configure",
-       "install": "node-waf build"
+       "install": "node-waf configure build"
    }
 }
 
