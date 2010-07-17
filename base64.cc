@@ -76,7 +76,7 @@ base64_decode(const char *input, int length, int *outlen)
     unsigned char char_array_4[4], char_array_3[3];
     unsigned char *output = new unsigned char[length*3/4];
 
-    while (length--) {
+    while (length-- && input[idx] != '=') {
 	//skip invalid or padding based chars
 	if (!is_base64(input[idx])) {
 	    idx++;
