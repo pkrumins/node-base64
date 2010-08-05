@@ -37,7 +37,6 @@
    },
    "scripts": {
        "install": "node-waf configure build"
-   },
-   "main": "./build/default/base64"
+   }
 }
 
