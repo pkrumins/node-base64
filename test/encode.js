@@ -18,3 +18,11 @@ exports.encode = function (assert) {
         });
     });
 };
+
+exports.symmetric = function (assert) {
+    var buf = new Buffer('pow biff zing');
+    assert.equal(
+        buf,
+        base64.decode(base64.encode(buf))
+    );
+};
