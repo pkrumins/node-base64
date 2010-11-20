@@ -12,7 +12,7 @@ function md5hex (data) {
 
 exports.encode = function (assert) {
     Hash(hashes).forEach(function (hash, file) {
-        fs.readFile(file, function (err, buf) {
+        fs.readFile(__dirname + '/' + file, function (err, buf) {
             if (err) throw err;
             assert.equal(hash, md5hex(base64.encode(buf)));
         });
