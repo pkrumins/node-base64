@@ -128,8 +128,11 @@ base64_encode_binding(const Arguments &args)
     if (!Buffer::HasInstance(args[0]))
         return VException("Argument should be a buffer");
 
-    Buffer *buffer = ObjectWrap::Unwrap<Buffer>(args[0]->ToObject());
-    char *str = base64_encode((unsigned char *)buffer->data(), buffer->length());
+    v8::Handle<v8::Object> buffer = args[0]->ToObject();
+    char *str = base64_encode(
+        (unsigned char *) Buffer::Data(buffer),
+        Buffer::Length(buffer)
+    );
     Local<String> ret = String::New(str);
     delete [] str;
     return scope.Close(ret);
@@ -146,8 +149,13 @@ base64_decode_binding(const Arguments &args)
     int outlen;
     unsigned char *decoded;
     if (Buffer::HasInstance(args[0])) { // buffer
-        Buffer *buffer = ObjectWrap::Unwrap<Buffer>(args[0]->ToObject());
-        decoded = base64_decode(buffer->data(), buffer->length(), &outlen);
+        v8::Handle<v8::Object> buffer = args[0]->ToObject();
+        
+        decoded = base64_decode(
+            Buffer::Data(buffer),
+            Buffer::Length(buffer),
+            &outlen
+        );
     }
     else { // string
         String::AsciiValue b64data(args[0]->ToString());
