@@ -1,16 +1,20 @@
 var base64_decode = require('base64').decode;
-var sys = require('sys');
+var crypto = require('crypto');
 var fs = require('fs');
-var Buffer = require('buffer').Buffer;
+var Hash = require('traverse/hash');
+var hashes = JSON.parse(
+    fs.readFileSync(__dirname + '/hashes.json').toString()
+);
 
-if (!process.argv[2]) {
-    sys.log('No argument specified, use `node-base64-decode.js <file>`');
-    process.exit(1);
+function md5sum (data) {
+    return new crypto.Hash('md5').update(data).digest('hex');
 }
 
-var file = fs.readFileSync(process.argv[2], 'ascii');
-var fileBuf = new Buffer(file.length);
-fileBuf.write(file, 'ascii');
-
-process.stdout.write(base64_decode(fileBuf), 'binary');
-
+exports.decode = function (assert) {
+    Hash(hashes).forEach(function (hash, file) {
+        fs.readFile(file, function (err, buf) {
+            if (err) throw err;
+            assert.equal(hash, md5sum(base64_decode(buf)));
+        });
+    });
+};
