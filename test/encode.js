@@ -1,16 +1,20 @@
-var base64_encode = require('base64').encode;
-var sys = require('sys');
+var base64 = require('base64');
+var crypto = require('crypto');
 var fs = require('fs');
-var Buffer = require('buffer').Buffer;
+var Hash = require('traverse/hash');
+var hashes = JSON.parse(
+    fs.readFileSync(__dirname + '/hashes.json').toString()
+);
 
-if (!process.argv[2]) {
-    sys.log('No argument specified, use `node-base64-encode.js <file>`');
-    process.exit(1);
+function md5hex (data) {
+    return new crypto.Hash('md5').update(data.toString()).digest('hex');
 }
 
-var file = fs.readFileSync(process.argv[2], 'binary');
-var fileBuf = new Buffer(file.length);
-fileBuf.write(file, 'binary');
-
-sys.print(base64_encode(fileBuf));
-
+exports.encode = function (assert) {
+    Hash(hashes).forEach(function (hash, file) {
+        fs.readFile(file, function (err, buf) {
+            if (err) throw err;
+            assert.equal(hash, md5hex(base64.encode(buf)));
+        });
+    });
+};

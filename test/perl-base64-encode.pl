@@ -8,5 +8,5 @@ use JSON qw/encode_json/;
 use Slurp qw/slurp/;
 
 print encode_json({ map {
-    $_ => md5_hex(encode_base64(slurp($_)))
-} glob "data/*" });
+    $_ => md5_hex(join '', split /\s+/, encode_base64(scalar slurp($_)))
+} glob 'data/*' });
