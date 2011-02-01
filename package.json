@@ -33,7 +33,7 @@
        "tests": "tests"
    },
    "engines": {
-       "node": ">=0.1.93"
+       "node": ">=0.3.0"
    },
    "scripts": {
        "install": "node-waf configure build"
