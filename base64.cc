@@ -152,8 +152,9 @@ Handle<Value>
 base64_decode_binding(const Arguments &args)
 {
     HandleScope scope;
+    node::encoding encflag = BINARY;
 
-    if (args.Length() != 1)
+    if (args.Length() < 1)
         return VException("One argument required - buffer or string with data to decode");
 
     int outlen;
@@ -172,7 +173,13 @@ base64_decode_binding(const Arguments &args)
         decoded = base64_decode(*b64data, b64data.length(), &outlen);
     }
 
-    Local<Value> ret = Encode(decoded, outlen, BINARY);
+    if (args.Length() > 1 && args[1]->IsString()) { 
+        String::AsciiValue flag(args[1]->ToString());
+        if (strcmp("utf8", *flag) == 0) encflag = UTF8;
+    }
+    
+    Local<Value> ret = Encode(decoded, outlen, encflag);
+    
     delete [] decoded;
     return scope.Close(ret);
 }
