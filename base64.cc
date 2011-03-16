@@ -121,18 +121,28 @@ Handle<Value>
 base64_encode_binding(const Arguments &args)
 {
     HandleScope scope;
-
+    char * str;
+    
     if (args.Length() != 1)
-        return VException("One argument required - buffer with data to encode");
+        return VException("One argument required - buffer or string with data to encode");
 
-    if (!Buffer::HasInstance(args[0]))
-        return VException("Argument should be a buffer");
+    if (Buffer::HasInstance(args[0])) {
+        v8::Handle<v8::Object> buffer = args[0]->ToObject();
+        str = base64_encode(
+            (unsigned char *) Buffer::Data(buffer),
+            Buffer::Length(buffer)
+        );
+    }
+    else if (args[0]->IsString()) {
+        Local<String> v8str = args[0]->ToString();
+        char * buffer = (char *) malloc(v8str->Utf8Length());
+        v8str->WriteUtf8(buffer);
+        str = base64_encode((unsigned char *)buffer, strlen(buffer));
+        free(buffer);
+    }
+    else
+        return VException("Argument should be a buffer or a string");
 
-    v8::Handle<v8::Object> buffer = args[0]->ToObject();
-    char *str = base64_encode(
-        (unsigned char *) Buffer::Data(buffer),
-        Buffer::Length(buffer)
-    );
     Local<String> ret = String::New(str);
     delete [] str;
     return scope.Close(ret);
