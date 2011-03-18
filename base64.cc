@@ -1,5 +1,6 @@
 #include <cctype>
 #include <cstring>
+#include <cstdlib>
 #include <v8.h>
 #include <node.h>
 #include <node_buffer.h>
