@@ -1,6 +1,6 @@
 {
    "name": "base64",
-   "version": "2.0.4",
+   "version": "2.0.6",
    "main": "base64",
    "description": "A C++ module for node-js that does base64 encoding and decoding.",
    "keywords": [
@@ -10,25 +10,17 @@
        "base64_encode", "base64_decode",
        "encode", "decode"
    ],
-   "maintainers": [
-       {
-           "name": "Peteris Krumins",
-           "email": "peteris.krumins@gmail.com",
-           "web": "http://www.catonmat.net",
-           "twitter": "pkrumins"
-       } 
-   ],
-   "licenses": [
-       {
-           "type": "MIT"
-       } 
-   ],
-   "repositories": [
-       {
-           "type": "git",
-           "url": "http://github.com/pkrumins/node-base64.git" 
-       } 
-   ],
+   "author": {
+       "name": "Peteris Krumins",
+       "email": "peteris.krumins@gmail.com",
+       "web": "http://www.catonmat.net",
+       "twitter": "pkrumins"
+   }, 
+   "license": "MIT",
+   "repository": {
+       "type": "git",
+       "url": "http://github.com/pkrumins/node-base64.git" 
+   }, 
    "directories": {
        "tests": "tests"
    },
