@@ -28,13 +28,13 @@ strings to C++ code in a sane way.
 
 Here is a basic example:
 
-    var sys = require('sys');
+    var util = require('util');
     var base64_encode = require('base64').encode;
     var Buffer = require('buffer').Buffer;
     
     var buf = new Buffer('hello world');
 
-    sys.print(base64_encode(buf));
+    util.print(base64_encode(buf));
 
     /* Output: aGVsbG8gd29ybGQ= */
 
@@ -45,10 +45,10 @@ decode
 Decodes a buffer containing base64 string, or just a base64 string to original
 data.
 
-    var sys = require('sys');
+    var util = require('util');
     var base64_decode = require('base64').decode;
 
-    sys.print(base64_decode('aGVsbG8gd29ybGQ='));
+    util.print(base64_decode('aGVsbG8gd29ybGQ='));
 
     /* Output: hello world */
 
