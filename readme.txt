@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/pkrumins/node-base64.png)](http://travis-ci.org/pkrumins/node-base64)
 Update: this module may no longer be necessary as nodejs includes its own
 base64 encoding/decoding functions.
 
