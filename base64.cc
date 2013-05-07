@@ -188,4 +188,4 @@ extern "C" void init (Handle<Object> target)
     target->Set(String::New("encode"), FunctionTemplate::New(base64_encode_binding)->GetFunction());
     target->Set(String::New("decode"), FunctionTemplate::New(base64_decode_binding)->GetFunction());
 }
-
+NODE_MODULE(base64, init)
