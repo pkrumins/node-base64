@@ -1,6 +1,7 @@
 #include <cctype>
 #include <cstring>
 #include <cstdlib>
+#include <new>
 #include <v8.h>
 #include <node.h>
 #include <node_buffer.h>
@@ -27,7 +28,11 @@ base64_encode(const unsigned char *input, int length)
     unsigned char char_array_3[3], char_array_4[4];
 
     int b64len = (length+2 - ((length+2)%3))*4/3;
-    char *b64str = new char[b64len + 1];
+    char *b64str = new (std::nothrow) char[b64len + 1];
+
+    if (b64str == NULL) {
+        return NULL;
+    }
 
     while (length--) {
         char_array_3[i++] = *(input++);
@@ -75,7 +80,11 @@ base64_decode(const char *input, int length, int *outlen)
     int r = 0;
     int idx = 0;
     unsigned char char_array_4[4], char_array_3[3];
-    unsigned char *output = new unsigned char[length*3/4];
+    unsigned char *output = new (std::nothrow) unsigned char[length*3/4];
+
+    if (output == NULL) {
+        return NULL;
+    }
 
     while (length-- && input[idx] != '=') {
 	//skip invalid or padding based chars
@@ -141,6 +150,11 @@ base64_encode_binding(const Arguments &args)
     else
         return VException("Argument should be a buffer or a string");
 
+
+    if (str == NULL) {
+        return VException("Unable to allocate enough memory");
+    }
+
     Local<String> ret = String::New(str);
     delete [] str;
     return scope.Close(ret);
@@ -169,6 +183,10 @@ base64_decode_binding(const Arguments &args)
     else { // string
         String::AsciiValue b64data(args[0]->ToString());
         decoded = base64_decode(*b64data, b64data.length(), &outlen);
+    }
+
+    if (decoded == NULL) {
+        return VException("Unable to allocate enough memory");
     }
 
     if (args.Length() > 1 && args[1]->IsString()) { 
