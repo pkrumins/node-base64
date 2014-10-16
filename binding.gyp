@@ -16,12 +16,12 @@
                 {
                     "action_name": "symlink",
                     "inputs": [
-                        "<@(PRODUCT_DIR)/base64.node"
+                        "build/Release/base64.node"
                     ],
                     "outputs": [
-                        "<(module_root_dir)/base64.node"
+                        "base64.node"
                     ],
-                    "action": ["ln", "-s", "<@(PRODUCT_DIR)/base64.node", "<(module_root_dir)/base64.node"]
+                    "action": ["ln", "-s", "build/Release/base64.node", "base64.node"]
                 }
             ]
         }
